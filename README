@@ -1,0 +1,25 @@
+*CS 559 Computer Vision Group Project: Evaluating the Impact of Generative Video Augmentation on Image Classification Performance*
+
+**Group members:**
+Robert Ashe: Model architecture and implementation, final report writing.
+Bieu To: Performance analysis and evaluation, final report writing.
+Thiago Henriques: Dataset preprocessing, final report writing.
+Adam Lizerbram: Model training and validation, final report writing.
+Afnan: Generative preprocessing and model training, final report writing.
+
+**Project description:**
+The core goal of this project is to explore whether introducing a pseudo-temporal dimension through
+generative video augmentation improves performance in image classification tasks. Conventionally,
+classification models work with static, singular images; however, we will employ AI-based video
+generation to synthesize several frames from a single image. Our aim is to determine if these additional,
+artificially constructed frames and the corresponding information they provide can enhance the accuracy
+of the classification process. Specifically, we will compare two approaches. First, we will employ a
+well-understood classifier (VGG-11) that will operate on traditional 2D images to establish a baseline for
+a comparison. Second, an augmented version of this baseline classifier will “inflate” a selection of its
+convolution layers to 3D so it can process short video samples generated from the 2D images. The
+performance of these two approaches will be compared to establish a conclusive result to our hypothesis.
+The question is whether temporal continuity, even if synthetically generated, aids the model in better
+capturing visual patterns or merely injects noise and complexity. The motivation for this inquiry stems
+from a broader interest in understanding how spatiotemporal modeling might unlock improvements in
+image recognition, particularly when genuine video data is unavailable, and the temporal element must be
+produced through generative means.
