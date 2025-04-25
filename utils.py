@@ -1,0 +1,37 @@
+import os
+import shutil
+import torch
+
+
+def save_checkpoint(state, is_best, output_dir):
+    os.makedirs(output_dir, exist_ok=True)
+    filepath = os.path.join(output_dir, 'checkpoint.pth')
+    torch.save(state, filepath)
+    if is_best:
+        shutil.copyfile(filepath, os.path.join(output_dir, 'model_best.pth.tar'))
+
+class average_meter:
+    def __init__(self):
+        self.reset()
+    def reset(self):
+        self.val = self.sum = self.count = 0
+    def update(self, val, n=1):
+        self.val = val
+        self.sum += val * n
+        self.count += n
+    @property
+    def avg(self):
+        return self.sum / self.count
+
+def accuracy(output, target, topk=(1,)):
+    """ Computes the top-k accuracy """
+    maxk = max(topk)
+    batch_size = target.size(0)
+    _, pred = output.topk(maxk, 1, True, True)
+    pred = pred.t()
+    correct = pred.eq(target.view(1, -1).expand_as(pred))
+    res = []
+    for k in topk:
+        correct_k = correct[:k].reshape(-1).float().sum(0)
+        res.append(correct_k.mul_(100.0 / batch_size))
+    return res
