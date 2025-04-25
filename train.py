@@ -60,7 +60,7 @@ def main(config_path="configs/train_config.yaml"):
 
             acc1, _ = accuracy(preds, targets, topk=(1, 5))
             losses.update(loss.item(), imgs.size(0))
-            top1.update(acc1.item, imgs.size(0))
+            top1.update(acc1.item(), imgs.size(0))
 
         print(f"Epoch {epoch} TRAIN  Loss: {losses.avg:.4f}  Top1: {top1.avg:.2f}%")
 
