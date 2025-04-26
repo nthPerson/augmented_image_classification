@@ -1,9 +1,9 @@
 data_root:            ./ImageNet
 wnids_file:           ./ImageNet/wnids.txt
-diffusion_model:      compvis/stable-video-diffusion
+diffusion_model:      stabilityai/stable-video-diffusion-img2vid
 num_frames:           3
 batch_size:           8
-workers:              4
+workers:              0
 epochs:               30
 lr:                   0.001
 momentum:             0.9

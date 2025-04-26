@@ -9,7 +9,10 @@ from datasets.tiny_imagenet import TinyImageNet10
 from datasets.tiny_imagenet_aug import AugmentedTinyImageNet10
 from models.vgg_baseline import get_vgg11_baseline
 from models.vgg_inflated import VGG11_3D
-from utils import save_checkpoint, average_meter, accuracy
+# from utils import save_checkpoint, average_meter, accuracy
+from utils.utils import save_checkpoint, average_meter, accuracy
+
+import torch.multiprocessing as mp
 
 def main(config_path="configs/train3d_config.yaml"):
     # Load config
@@ -35,6 +38,10 @@ def main(config_path="configs/train3d_config.yaml"):
     pipe = StableVideoDiffusionPipeline.from_pretrained(
         cfg["diffusion_model"], torch_dtype=torch.float16
     ).to(device)
+
+    # To save GPU memory: offload weights to CPU, move layers to GPU only
+    pipe.enable_model_cpu_offload()
+    pipe.to(dtype=torch.float16)  # make sure any new tensors default to half-precision
 
     # Augmented datasets and loaders
     train_ds = AugmentedTinyImageNet10(base_train, pipe,
@@ -115,32 +122,10 @@ def main(config_path="configs/train3d_config.yaml"):
         scheduler.step()
 
 if __name__ == "__main__":
+    # bugfix: 'spawn' start method
+    mp.set_start_method("spawn", force=True)
+
+    # Train
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
