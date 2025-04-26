@@ -28,7 +28,8 @@ class AugmentedTinyImageNet10(Dataset):
         # Generate video frames (num_frames total)
         with torch.no_grad():
             out = self.pipe(img, num_inference_steps=20, num_frames=self.num_frames)
-        frames = out.frames  # list of PIL.Image length=num_frames
+        # frames = out.frames  # list of PIL.Image length=num_frames
+        frames = out.frames[0]  # list of PIL.Image length=num_frames (bugfix: select first element instead of getting 1-element list)
         # Apply transform to each and stack
         tensors = [self.transform(frame) for frame in frames]
         video = torch.stack(tensors, dim=1)  # Shape [C, T, H, W]

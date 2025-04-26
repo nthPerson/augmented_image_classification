@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torch.nn.modules.utils import _pair
 
 
 def inflate_conv2d_to_conv3d(conv2d, time_dim=3):
@@ -47,9 +48,12 @@ class VGG11_3D(nn.Module):
                 layers3d.append(bn3d)
             elif isinstance(layer, nn.MaxPool2d):  # Inflate MaxPool2d layers to MaxPool3d
                 layers3d.append(nn.MaxPool3d(
-                    kernel_size=(1,) + layer.kernel_size,
-                    stride=(1,) + layer.stride,
-                    padding=(0,) + layer.padding
+                    # kernel_size=(1,) + layer.kernel_size,
+                    # stride=(1,) + layer.stride,
+                    # padding=(0,) + layer.padding
+                    kernel_size=(1,) + _pair(layer.kernel_size),
+                    stride=(1,) + _pair(layer.stride),
+                    padding=(0,) + _pair(layer.padding),
                 ))
             else:
                 # ReLU, Dropout, etc. remain unchanged
