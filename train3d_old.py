@@ -8,7 +8,7 @@ from diffusers import StableVideoDiffusionPipeline
 from datasets.tiny_imagenet import TinyImageNet10
 from datasets.tiny_imagenet_aug import AugmentedTinyImageNet10
 from models.vgg_baseline import get_vgg11_baseline
-from models.vgg_inflated import VGG11_3D
+from models.vgg_inflated_old import VGG11_3D
 # from utils import save_checkpoint, average_meter, accuracy
 from utils.utils import save_checkpoint, average_meter, accuracy
 
