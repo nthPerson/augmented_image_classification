@@ -38,8 +38,11 @@ class VGG11_3D(nn.Module):
         super().__init__()
         layers3d = []
         for layer in baseline_vgg2d.features:
+            print(f'\nInflating layer: {layer}')
+            print(f'-----Layer type: {type(layer)}')
             if isinstance(layer, nn.Conv2d):
                 layers3d.append(inflate_conv2d_to_conv3d(layer, time_dim))
+                print(f'----------Converted from Conv2d to Conv3d')
             elif isinstance(layer, nn.BatchNorm2d):
                 # convert to BatchNorm3d
                 bn3d = nn.BatchNorm3d(
@@ -52,6 +55,7 @@ class VGG11_3D(nn.Module):
                 bn3d.weight.data.copy_(layer.weight.data)
                 bn3d.bias.data.copy_(layer.bias.data)
                 layers3d.append(bn3d)
+                print(f'----------Converted from BatchNorm2d to BatchNorm3d')
             elif isinstance(layer, nn.MaxPool2d):
                 # inflate MaxPool2d to MaxPool3d: no time pooling
                 layers3d.append(nn.MaxPool3d(
@@ -62,6 +66,9 @@ class VGG11_3D(nn.Module):
             else:
                 # ReLU, Dropout remain unchanged; works since they ignore extra time dim
                 layers3d.append(layer)
+                print(f'----------Layer unchanged: {type(layer)}')
+
+            print(f'-----Layer 3D type: {type(layers3d[-1])}')
         self.features3d = nn.Sequential(*layers3d)
 
         # pool to (T, H, W) = (time_dim, 7, 7) -> but we want to preserve time until the end
@@ -70,6 +77,8 @@ class VGG11_3D(nn.Module):
 
         # reuse classifier as-is
         self.classifier = baseline_vgg2d.classifier
+
+
 
     def forward(self, x):
         # x shape: [B, C, T, H, W]
