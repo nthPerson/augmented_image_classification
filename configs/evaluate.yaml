@@ -1,0 +1,18 @@
+model2d:
+  type: baseline
+  checkpoint: ./checkpoints/2d_baseline/model_best.pth.tar
+model3d:
+  type: inflated
+  checkpoint: ./checkpoints/3d_video/model_best.pth.tar
+
+data:
+  root: ./svd_videos
+  val_csv: ./svd_videos/val.csv
+  batch_size: 16
+  workers: 4
+  mean: [0.485, 0.456, 0.406]
+  std:  [0.229, 0.224, 0.225]
+  time_dim: 3
+num_classes: 10
+
+output_dir: ./evaluation_results
