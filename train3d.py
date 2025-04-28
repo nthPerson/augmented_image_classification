@@ -5,18 +5,21 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from torchvision import transforms
+from tqdm import tqdm
 
 from datasets.video_dataset import VideoClassificationDataset
 from models.vgg_baseline import get_vgg11_baseline
-from models.vgg_inflated_old import VGG11_3D
+from models.vgg_inflated import VGG11_3D
 from utils.utils import save_checkpoint, average_meter, accuracy
 
 def main(config_path="configs/train3d_video.yaml"):
     # 1. Load configuration file
+    print(f'Loading config file: {config_path}')
     cfg = yaml.safe_load(open(config_path))
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # 2. Frame-wise transforms
+    print(f'Upsampling image data to 244 x 244...')
     frame_tf = transforms.Compose([
         transforms.Resize(224),
         transforms.CenterCrop(224),
@@ -24,21 +27,25 @@ def main(config_path="configs/train3d_video.yaml"):
     ])
 
     # 3. Video datasets & loaders
+    print(f'Creating training dataset: {cfg["train_csv"]})')
     train_ds = VideoClassificationDataset(
         root_dir=os.path.join(cfg['data_root'], "train"),
         csv_file=cfg['train_csv'],
         transform=frame_tf,
     )
+    print(f'Creating validation dataset: {cfg["val_csv"]})')
     val_ds = VideoClassificationDataset(
         root_dir=os.path.join(cfg['data_root'], "val"),
         csv_file=cfg['val_csv'],
         transform=frame_tf,
     )
+    print(f'Number of training samples: {len(train_ds)}')
     train_loader = DataLoader(train_ds,
                               batch_size=cfg['batch_size'],
                               shuffle=True,
                               num_workers=cfg['workers'],
                               pin_memory=True)
+    print(f'Number of validation samples: {len(val_ds)}')
     val_loader = DataLoader(val_ds,
                             batch_size=cfg['batch_size'],
                             shuffle=False,
@@ -46,6 +53,7 @@ def main(config_path="configs/train3d_video.yaml"):
                             pin_memory=True)
 
     # 4. Models
+    print(f'Creating 3D model...')
     vgg2d = get_vgg11_baseline(num_classes=cfg['num_classes'], pretrained=True)
     model3d = VGG11_3D(vgg2d, time_dim=cfg['time_dim']).to(device)
 
@@ -60,12 +68,14 @@ def main(config_path="configs/train3d_video.yaml"):
                                                 gamma=cfg['lr_gamma'])
 
     # 6. Training loop
+    print(f'Starting training loop for {cfg["epochs"]} epochs')
     best_acc = 0.0
     for epoch in range(cfg['epochs']):
         # Training
         model3d.train()
         train_loss = average_meter(); train_acc = average_meter()
-        for vids, labels in train_loader:
+        train_iter = tqdm(train_loader, desc=f"Epoch {epoch+1}/{cfg['epochs']} [Train]", leave=False)
+        for vids, labels in train_iter:
             vids, labels = vids.to(device), labels.to(device)
             preds = model3d(vids)
             loss = criterion(preds, labels)
@@ -78,13 +88,17 @@ def main(config_path="configs/train3d_video.yaml"):
             train_loss.update(loss.item(), vids.size(0))
             train_acc.update(acc1.item(), vids.size(0))
 
-        print(f'Epoch [{epoch+1}/{cfg["epochs"]}] TRAIN  Loss {train_loss.avg:.4f} Acc@1 {train_acc.avg:.4f}%')
+            train_iter.set_postfix({
+                'loss': f"{train_loss.avg:.4f}",
+                'acc@1': f"{train_acc.avg:.2f}%"
+            })
 
         # Validation
         model3d.eval()
         val_loss = average_meter(); val_acc = average_meter()
+        val_iter = tqdm(val_loader, desc=f"Epoch {epoch+1}/{cfg['epochs']} [Valid]", leave=False)
         with torch.no_grad():
-            for vids, labels in val_loader:
+            for vids, labels in val_iter:
                 vids, labels = vids.to(device), labels.to(device)
                 preds = model3d(vids)
                 loss = criterion(preds, labels)
@@ -93,7 +107,10 @@ def main(config_path="configs/train3d_video.yaml"):
                 val_loss.update(loss.item(), vids.size(0))
                 val_acc.update(acc1.item(), vids.size(0))
 
-        print(f'Epoch [{epoch+1}/{cfg["epochs"]}] VALID  Loss {val_loss.avg:.4f} Acc@1 {val_acc.avg:.4f}%')
+                val_iter.set_postfix({
+                    'loss': f"{val_loss.avg:.4f}",
+                    'acc@1': f"{val_acc.avg:.2f}%"
+                })
 
         # Checkpoint
         is_best = val_acc.avg > best_acc
