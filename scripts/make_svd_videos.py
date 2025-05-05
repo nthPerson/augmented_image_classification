@@ -49,7 +49,7 @@ def process_split(split):
                                     desc=f"{split}"):
             with torch.no_grad():
                 vid = pipe(img,
-                           num_inference_steps=2,
+                           num_inference_steps=12,
                            num_frames=nfrm,
                            decode_chunk_size=1).frames[0]
 
