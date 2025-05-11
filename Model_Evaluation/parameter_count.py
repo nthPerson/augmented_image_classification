@@ -1,5 +1,5 @@
-from models.vgg_baseline import get_vgg11_baseline
-from models.vgg_inflated import VGG11_3D
+from Baseline_VGG.vgg_baseline import get_vgg11_baseline
+from Inflated_3D_VGG.vgg_inflated import VGG11_3D
 
 def count_parameters(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)

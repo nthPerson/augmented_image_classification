@@ -13,9 +13,9 @@ from sklearn.metrics import (
     confusion_matrix
 )
 
-from datasets.video_dataset import VideoClassificationDataset
-from models.vgg_baseline import get_vgg11_baseline
-from models.vgg_inflated import VGG11_3D
+from Inflated_3D_VGG.video_dataset import VideoClassificationDataset
+from Baseline_VGG.vgg_baseline import get_vgg11_baseline
+from Inflated_3D_VGG.vgg_inflated import VGG11_3D
 
 def load_model(cfg, device):
     """

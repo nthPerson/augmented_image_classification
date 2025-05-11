@@ -1,7 +1,7 @@
 import yaml
 from torch.utils.data import DataLoader
 from torchvision import transforms
-from datasets.video_dataset import VideoClassificationDataset
+from Inflated_3D_VGG.video_dataset import VideoClassificationDataset
 
 
 # Load config

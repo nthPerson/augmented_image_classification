@@ -4,12 +4,12 @@ Generate <num_frames>-frame SVD videos for every Tiny-ImageNet‐10 image and
 save them as MP4 clips + a CSV manifest.
 """
 
-import csv, os, yaml, torch
+import csv, yaml, torch
 from pathlib import Path
 from torchvision import transforms, io
 from tqdm.auto import tqdm
 from diffusers import StableVideoDiffusionPipeline
-from datasets.tiny_imagenet import TinyImageNet10
+from Baseline_VGG.tiny_imagenet import TinyImageNet10
 
 CFG_PATH = "configs/train3d_config.yaml"
 OUT_DIR  = Path("./svd_videos")           # each split gets its own sub-dir

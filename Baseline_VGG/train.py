@@ -3,8 +3,8 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from torchvision import transforms
-from datasets.tiny_imagenet import TinyImageNet10
-from models.vgg_baseline import get_vgg11_baseline
+from Baseline_VGG.tiny_imagenet import TinyImageNet10
+from Baseline_VGG.vgg_baseline import get_vgg11_baseline
 from utils.utils import save_checkpoint, average_meter, accuracy
 
 def main(config_path="configs/train_config.yaml"):

@@ -1,8 +1,8 @@
 import torch
 from ptflops import get_model_complexity_info
 
-from models.vgg_baseline import get_vgg11_baseline
-from models.vgg_inflated import VGG11_3D
+from Baseline_VGG.vgg_baseline import get_vgg11_baseline
+from Inflated_3D_VGG.vgg_inflated import VGG11_3D
 
 # For 2D model
 with torch.cuda.device(0):

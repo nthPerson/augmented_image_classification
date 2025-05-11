@@ -7,9 +7,9 @@ from torch.utils.data import DataLoader
 from torchvision import transforms
 from tqdm import tqdm
 
-from datasets.video_dataset import VideoClassificationDataset
-from models.vgg_baseline import get_vgg11_baseline
-from models.vgg_inflated import VGG11_3D
+from Inflated_3D_VGG.video_dataset import VideoClassificationDataset
+from Baseline_VGG.vgg_baseline import get_vgg11_baseline
+from Inflated_3D_VGG.vgg_inflated import VGG11_3D
 from utils.utils import save_checkpoint, average_meter, accuracy
 
 def main(config_path="configs/train3d_video.yaml"):
