@@ -53,7 +53,7 @@ The dataset that we generated for this project is available on Kaggle. You can d
 - **`evaluation_results/`** – Stored confusion matrices, per-class metrics, and other evaluation data.
 
 ### `scripts/`
-- **`debug_video_loader.py`** – Quick test to verify 3D `DataLoader` & transforms.
+- **`debug_video_loader.py`** – Quick test to verify 3D DataLoader & transforms.
 
 ### `svd_videos/`
 - **`train/`** & **`val/`** – The actual 3-frame videos.
