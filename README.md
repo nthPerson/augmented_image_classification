@@ -11,16 +11,16 @@ This repository contains the code and data used in the project described in Gene
 The dataset that we generated for this project is available on Kaggle. You can download it from the following link: https://www.kaggle.com/datasets/afnanalgarby/svd-generated-video-dataset/data
 
 ## Project Structure
-├── Baseline_VGG/ # Data loaders, model definition, training script & config for the 2D VGG-11 baseline
+├── Baseline_VGG/             # Data loaders, model definition, training script & config for the 2D VGG-11 baseline
 <p>├── Data_Augmentation_SVD/ # Script and config used to generate 3-frame video dataset via Stable Video Diffusion
-<p>├── Data_Sourcing/ # Code to extract and filter the 10-class Tiny ImageNet subset
-<p>├── Inflated_3D_VGG/ # Data loaders, model definition, training script & config for the 3D‐inflated VGG-11
-<p>├── Model_Evaluation/ # Inference scripts, metric calculators, FLOPs/parameter counters
-<p>├── scripts/ # Throw-away/debug scripts (e.g. video loader tests)
-<p>├── svd_videos/ # The generated 3-frame “video” dataset (train/val + CSV indices)
-<p>├── utils/ # Utility functions used across the repo
+<p>├── Data_Sourcing/         # Code to extract and filter the 10-class Tiny ImageNet subset
+<p>├── Inflated_3D_VGG/       # Data loaders, model definition, training script & config for the 3D‐inflated VGG-11
+<p>├── Model_Evaluation/      # Inference scripts, metric calculators, FLOPs/parameter counters
+<p>├── scripts/               # Throw-away/debug scripts (e.g. video loader tests)
+<p>├── svd_videos/            # The generated 3-frame “video” dataset (train/val + CSV indices)
+<p>├── utils/                 # Utility functions used across the repo
 <p>├── Generative_Video_Augmentation_for_Image_Classification.pdf # The final report
-<p>├── README.md # You are here
+<p>├── README.md              # You are here
 <p>└── requirements.txt # Python dependencies
 
 ### `Baseline_VGG/`
