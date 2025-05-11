@@ -10,6 +10,9 @@ This repository contains the code and data used in the project described in Gene
 ## Dataset Availability
 The dataset that we generated for this project is available on Kaggle. You can download it from the following link: https://www.kaggle.com/datasets/afnanalgarby/svd-generated-video-dataset/data
 
+## GitHub Repository
+The GitHub repository for this project is located at https://github.com/nthPerson/augmented_image_classification
+
 ## Project Structure
 ├── Baseline_VGG/             # Data loaders, model definition, training script & config for the 2D VGG-11 baseline
 <p>├── Data_Augmentation_SVD/ # Script and config used to generate 3-frame video dataset via Stable Video Diffusion
