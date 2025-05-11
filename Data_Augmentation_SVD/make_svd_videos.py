@@ -11,7 +11,7 @@ from tqdm.auto import tqdm
 from diffusers import StableVideoDiffusionPipeline
 from Baseline_VGG.tiny_imagenet import TinyImageNet10
 
-CFG_PATH = "configs/train3d_config.yaml"
+CFG_PATH = "configs/data_aug_config.yaml"
 OUT_DIR  = Path("./svd_videos")           # each split gets its own sub-dir
 OUT_DIR.mkdir(exist_ok=True)
 
