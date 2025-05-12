@@ -1,7 +1,7 @@
 # Generative Video Augmentation for Image Classification
 ## CS 559 Computer Vision Group Project
 
-### Group Members: Robert Ashe, Afnan Algharby, Bieu To, Adam Lizerbram, Thiago Henriques
+### Group Members: Robert Ashe, Afnan Algharbi, Bieu To, Adam Lizerbram, Thiago Henriques
 
 
 ## Project Overview
@@ -10,18 +10,21 @@ This repository contains the code and data used in the project described in Gene
 ## Dataset Availability
 The dataset that we generated for this project is available on Kaggle. You can download it from the following link: https://www.kaggle.com/datasets/afnanalgarby/svd-generated-video-dataset/data
 
+## GitHub Repository
+The GitHub repository for this project is located at https://github.com/nthPerson/augmented_image_classification
+
 ## Project Structure
-├── Baseline_VGG/ # Data loaders, model definition, training script & config for the 2D VGG-11 baseline
-├── Data_Augmentation_SVD/ # Script and config used to generate 3-frame video dataset via Stable Video Diffusion
-├── Data_Sourcing/ # Code to extract and filter the 10-class Tiny ImageNet subset
-├── Inflated_3D_VGG/ # Data loaders, model definition, training script & config for the 3D‐inflated VGG-11
-├── Model_Evaluation/ # Inference scripts, metric calculators, FLOPs/parameter counters
-├── scripts/ # Throw-away/debug scripts (e.g. video loader tests)
-├── svd_videos/ # The generated 3-frame “video” dataset (train/val + CSV indices)
-├── utils/ # Utility functions used across the repo
-├── Generative_Video_Augmentation_for_Image_Classification.pdf # The final report
-├── README.md # You are here
-└── requirements.txt # Python dependencies
+├── Baseline_VGG/             # Data loaders, model definition, training script & config for the 2D VGG-11 baseline
+<p>├── Data_Augmentation_SVD/ # Script and config used to generate 3-frame video dataset via Stable Video Diffusion
+<p>├── Data_Sourcing/         # Code to extract and filter the 10-class Tiny ImageNet subset
+<p>├── Inflated_3D_VGG/       # Data loaders, model definition, training script & config for the 3D‐inflated VGG-11
+<p>├── Model_Evaluation/      # Inference scripts, metric calculators, FLOPs/parameter counters
+<p>├── scripts/               # Throw-away/debug scripts (e.g. video loader tests)
+<p>├── svd_videos/            # The generated 3-frame “video” dataset (train/val + CSV indices)
+<p>├── utils/                 # Utility functions used across the repo
+<p>├── Generative_Video_Augmentation_for_Image_Classification.pdf # The final report
+<p>├── README.md              # You are here
+<p>└── requirements.txt # Python dependencies
 
 ### `Baseline_VGG/`
 - **`tiny_imagenet.py`** – Dataset definition for the 10-class Tiny ImageNet subset.
@@ -53,7 +56,7 @@ The dataset that we generated for this project is available on Kaggle. You can d
 - **`evaluation_results/`** – Stored confusion matrices, per-class metrics, and other evaluation data.
 
 ### `scripts/`
-- **`debug_video_loader.py`** – Quick test to verify 3D `DataLoader` & transforms.
+- **`debug_video_loader.py`** – Quick test to verify 3D DataLoader & transforms.
 
 ### `svd_videos/`
 - **`train/`** & **`val/`** – The actual 3-frame videos.
