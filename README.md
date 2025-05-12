@@ -1,7 +1,7 @@
 # Generative Video Augmentation for Image Classification
 ## CS 559 Computer Vision Group Project
 
-### Group Members: Robert Ashe, Afnan Algharby, Bieu To, Adam Lizerbram, Thiago Henriques
+### Group Members: Robert Ashe, Afnan Algharbi, Bieu To, Adam Lizerbram, Thiago Henriques
 
 
 ## Project Overview
